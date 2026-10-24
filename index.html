@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+    <charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Französisch Vokabeltrainer - Vollständig</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h2>🇫🇷 VocabMaster</h2>
+                <button id="theme-toggle" class="icon-btn" title="Design wechseln">🌙</button>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-item active" data-target="view-dashboard">📊 Dashboard</button>
+                <button class="nav-item" data-target="view-flashcards">🗂️ Karteikarten</button>
+                <button class="nav-item" data-target="view-quiz">📝 Vokabeltest</button>
+                <button class="nav-item" data-target="view-mc">🔠 Multiple Choice</button>
+                <button class="nav-item" data-target="view-write">✍️ Schreiben</button>
+                <button class="nav-item" data-target="view-vocabulary">📚 Vokabelverzeichnis</button>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="reset-progress-btn" class="btn-danger-outline">Fortschritt zurücksetzen</button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- DASHBOARD -->
+            <section id="view-dashboard" class="view active">
+                <header class="view-header">
+                    <h1>Dashboard</h1>
+                    <p>Willkommen zurück! Hier ist deine Lernübersicht.</p>
+                </header>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Gesamt Vokabeln</h3>
+                        <p id="stat-total">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Gelernt</h3>
+                        <p id="stat-learned">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Noch ungelernte</h3>
+                        <p id="stat-unlearned">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Schwierige Vokabeln</h3>
+                        <p id="stat-difficult">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Richtig / Falsch</h3>
+                        <p><span id="stat-correct">0</span> / <span id="stat-wrong">0</span></p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Fortschritt</h3>
+                        <p id="stat-percent">0%</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- KARTEIKARTEN -->
+            <section id="view-flashcards" class="view">
+                <header class="view-header">
+                    <h1>Karteikarten-Modus</h1>
+                    <div class="controls-row">
+                        <select id="fc-unit-filter" class="select-input">
+                            <option value="all">Alle Einheiten</option>
+                            <option value="Unité 1">Unité 1</option>
+                            <option value="Unité 2">Unité 2</option>
+                            <option value="Unité 3">Unité 3</option>
+                            <option value="Unité 4">Unité 4</option>
+                        </select>
+                        <select id="fc-direction" class="select-input">
+                            <option value="fr-de">Französisch ➔ Deutsch</option>
+                            <option value="de-fr">Deutsch ➔ Französisch</option>
+                        </select>
+                    </div>
+                </header>
+                <div class="flashcard-container">
+                    <div class="flashcard" id="flashcard">
+                        <div class="card-inner" id="card-inner">
+                            <div class="card-front">
+                                <span class="card-unit" id="fc-unit">Unité</span>
+                                <h2 id="fc-term">Lade Vokabeln...</h2>
+                                <p class="card-hint" id="fc-hint"></p>
+                            </div>
+                            <div class="card-back">
+                                <h2 id="fc-translation">Übersetzung</h2>
+                                <p class="card-example" id="fc-example"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flashcard-actions">
+                        <button id="fc-prev" class="btn btn-secondary">Vorherige</button>
+                        <button id="fc-flip" class="btn btn-primary">Lösung anzeigen</button>
+                        <button id="fc-hard" class="btn btn-warning">Noch üben</button>
+                        <button id="fc-known" class="btn btn-success">Gewusst</button>
+                        <button id="fc-next" class="btn btn-secondary">Nächste</button>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div id="fc-progress" class="progress-bar"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VOKABELTEST -->
+            <section id="view-quiz" class="view">
+                <header class="view-header">
+                    <h1>Vokabeltest</h1>
+                    <select id="quiz-unit-filter" class="select-input">
+                        <option value="all">Alle Einheiten</option>
+                        <option value="Unité 1">Unité 1</option>
+                        <option value="Unité 2">Unité 2</option>
+                        <option value="Unité 3">Unité 3</option>
+                        <option value="Unité 4">Unité 4</option>
+                    </select>
+                </header>
+                <div class="quiz-container" id="quiz-box">
+                    <div class="quiz-question-card">
+                        <span id="quiz-unit" class="card-unit">Einheit</span>
+                        <p>Übersetze ins Deutsche:</p>
+                        <h2 id="quiz-prompt">Vokabel</h2>
+                        <input type="text" id="quiz-input" class="text-input" placeholder="Deine Übersetzung..." autocomplete="off">
+                        <button id="quiz-submit" class="btn btn-primary">Überprüfen</button>
+                    </div>
+                    <div id="quiz-feedback" class="quiz-feedback hidden"></div>
+                </div>
+                <div id="quiz-results" class="quiz-results hidden">
+                    <h2>Test beendet!</h2>
+                    <p id="quiz-score-text"></p>
+                    <button id="quiz-restart" class="btn btn-primary">Nochmal versuchen</button>
+                </div>
+            </section>
+
+            <!-- MULTIPLE CHOICE -->
+            <section id="view-mc" class="view">
+                <header class="view-header">
+                    <h1>Multiple Choice</h1>
+                    <select id="mc-unit-filter" class="select-input">
+                        <option value="all">Alle Einheiten</option>
+                        <option value="Unité 1">Unité 1</option>
+                        <option value="Unité 2">Unité 2</option>
+                        <option value="Unité 3">Unité 3</option>
+                        <option value="Unité 4">Unité 4</option>
+                    </select>
+                </header>
+                <div class="mc-container" id="mc-box">
+                    <div class="quiz-question-card">
+                        <span id="mc-unit" class="card-unit">Einheit</span>
+                        <h2 id="mc-prompt">Vokabel</h2>
+                        <div class="mc-options" id="mc-options">
+                            <!-- Options injected dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SCHREIBEN & ÜBERSETZEN -->
+            <section id="view-write" class="view">
+                <header class="view-header">
+                    <h1>Schreiben & Übersetzen</h1>
+                    <select id="write-unit-filter" class="select-input">
+                        <option value="all">Alle Einheiten</option>
+                        <option value="Unité 1">Unité 1</option>
+                        <option value="Unité 2">Unité 2</option>
+                        <option value="Unité 3">Unité 3</option>
+                        <option value="Unité 4">Unité 4</option>
+                    </select>
+                </header>
+                <div class="quiz-container" id="write-box">
+                    <div class="quiz-question-card">
+                        <span id="write-unit" class="card-unit">Einheit</span>
+                        <p>Schreibe auf Französisch:</p>
+                        <h2 id="write-prompt">Deutscher Begriff</h2>
+                        <input type="text" id="write-input" class="text-input" placeholder="Französische Vokabel..." autocomplete="off">
+                        <button id="write-submit" class="btn btn-primary">Überprüfen</button>
+                    </div>
+                    <div id="write-feedback" class="quiz-feedback hidden"></div>
+                </div>
+            </section>
+
+            <!-- VOKABELVERZEICHNIS -->
+            <section id="view-vocabulary" class="view">
+                <header class="view-header">
+                    <h1>Vokabelverzeichnis (<span id="vocab-count">0</span>)</h1>
+                    <div class="vocab-controls">
+                        <input type="text" id="vocab-search" class="text-input" placeholder="Suchen...">
+                        <select id="vocab-filter-unit" class="select-input">
+                            <option value="all">Alle Einheiten</option>
+                            <option value="Unité 1">Unité 1</option>
+                            <option value="Unité 2">Unité 2</option>
+                            <option value="Unité 3">Unité 3</option>
+                            <option value="Unité 4">Unité 4</option>
+                        </select>
+                    </div>
+                </header>
+                <div class="table-container">
+                    <table class="vocab-table">
+                        <thead>
+                            <tr>
+                                <th>Französisch</th>
+                                <th>Deutsch</th>
+                                <th>Einheit</th>
+                                <th>Aktionen</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vocab-table-body">
+                            <!-- Injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="vocabulary.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
